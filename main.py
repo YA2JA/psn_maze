@@ -1,5 +1,5 @@
 from maze import Maze
-from utils import cartesien_to_lineaire, distance_manathane
+from utils import distance_manathane
 from algo import astar_pathfinder
 
 def main():
@@ -20,8 +20,8 @@ def main():
     # astar_pathfinder (print_flag)
     maze.print_walls()
     path = astar_pathfinder(maze, maze.player, maze.cheeses[0], distance_manathane)
-    for i in path:
-        maze.move_player(i)
+    for vec in path:             
+        maze.move_player(vec)
         print(maze, "\n")
 if __name__ == "__main__":
     main()
