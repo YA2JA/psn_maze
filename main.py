@@ -8,7 +8,8 @@ from utils import (
                 )
 
 from algo import astar_pathfinder
-from hardware.motor import RobotMovement
+from hardware.demo import move
+from local_type import Vector
 
 def main():
     maze = Maze.load_from_file('./mazes/level1.txt')
@@ -30,14 +31,16 @@ def main():
     # Find path
     path = astar_pathfinder(maze, maze.player, maze.finnishis[0], distance_manathane)
     
+    #Mesure wheels::
+    # if True:
+        # import hardware.wheel
+
     #exo 3
     # Move player to finnish
-    robot = RobotMovement(angle=0)
     for vec in path:
-        robot.set_angle(get_movement_vector(maze.player, vec))
-        robot.move_forward()
-        maze.move_player(vec)
-        print_matrix(maze.matrix, end='\n\n')
-
+        goto = get_movement_vector(maze.player, vec)
+        move(goto)
+        print(goto.x, goto.y)
+    
 if __name__ == "__main__":
     main()
