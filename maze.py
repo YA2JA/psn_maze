@@ -41,7 +41,7 @@ class Maze:
                 if val == 1:
                     print("X", end=' ')
                     continue
-                print("O", end=' ')
+                print("-", end=' ')
             print()
 
     def __str__(self):

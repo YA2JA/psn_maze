@@ -8,8 +8,9 @@ from utils import (
                 )
 
 from algo import astar_pathfinder
-from hardware.demo import move
+from hardware.demo import move, current_angle, turn_to, gyro
 from local_type import Vector
+import time
 
 def main():
     maze = Maze.load_from_file('./mazes/level1.txt')
@@ -33,14 +34,20 @@ def main():
     
     #Mesure wheels::
     # if True:
-        # import hardware.wheel
+    #     import hardware.wheel
 
     #exo 3
     # Move player to finnish
     for vec in path:
         goto = get_movement_vector(maze.player, vec)
         move(goto)
-        print(goto.x, goto.y)
-    
+        # print(goto.x, goto.y)
+        maze.player = vec
+
+    # for i in (270, 360, 90, 180, 90, 0, 180):
+    #     print("Angle:", current_angle, "calculeted", gyro.angle())
+    #     turn_to(i)
+    #     time.sleep(3)
+
 if __name__ == "__main__":
     main()

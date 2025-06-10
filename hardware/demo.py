@@ -1,34 +1,28 @@
 from pybricks.ev3devices import Motor, GyroSensor
 from pybricks.parameters import Port, Direction, Stop
 from pybricks.tools import wait
-from pybricks.hubs import EV3Brick
-from pybricks.robotics import DriveBase
 from local_type import Vector
 
-from .conf import left_motor, right_motor, gyro
-
-# Initialize devices
-ev3 = EV3Brick()
-robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=320)
+from .conf import left_motor, right_motor, gyro, robot, SPEED
 
 # Calibration
-gyro.reset_angle(0)
+current_angle = 270  # In degrees, 0 = North, 90 = East, etc.
+gyro.reset_angle(current_angle)
 
 # Constants
-SQUARE_LENGTH_MM = 300  # Length of one square in mm
+SQUARE_LENGTH_MM = 340  # Length of one square in mm
 
 # Global state
-current_angle = 0  # In degrees, 0 = North, 90 = East, etc.
 
-def go_straight_smart(distance_mm, speed=-100):
+def go_straight_smart(distance_mm, speed=SPEED):
     """Goes straight using gyro for correction"""
     target_angle = gyro.angle()
     robot.reset()
-    print("target angle:", target_angle, "current_angle:", current_angle)
     while abs(robot.distance()) < abs(distance_mm):
+        print("target angle:", target_angle, "current_angle:", current_angle)
         print("distance ", robot.distance(),  distance_mm)
         error = target_angle - gyro.angle()
-        correction = error * 50  # Tunable coefficient
+        correction = error * 2 #50  # Tunable coefficient
         robot.drive(speed, correction)
         wait(20)
     robot.stop(Stop.BRAKE)
@@ -36,6 +30,7 @@ def go_straight_smart(distance_mm, speed=-100):
 def turn_to(target_direction):
     """Turns robot to absolute target angle (0 = North, 90 = East, etc.)"""
     global current_angle
+    print("angle :", current_angle)
     diff = (target_direction - current_angle) % 360
     if diff > 180:
         diff -= 360  # Choose shortest rotation
