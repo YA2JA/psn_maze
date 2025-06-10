@@ -2,11 +2,11 @@ from pybricks.ev3devices import Motor, GyroSensor
 from pybricks.parameters import Port, Direction, Stop
 from pybricks.tools import wait
 from local_type import Vector
-
+from utils import signe
 from .conf import left_motor, right_motor, gyro, robot, SPEED
 
 # Calibration
-current_angle = 270  # In degrees, 0 = North, 90 = East, etc.
+current_angle = 0  # In degrees, 0 = North, 90 = East, etc.
 gyro.reset_angle(current_angle)
 
 # Constants
@@ -22,7 +22,7 @@ def go_straight_smart(distance_mm, speed=SPEED):
         print("target angle:", target_angle, "current_angle:", current_angle)
         print("distance ", robot.distance(),  distance_mm)
         error = target_angle - gyro.angle()
-        correction = error * 2 #50  # Tunable coefficient
+        correction = signe(SPEED) * error * 5  # Tunable coefficient
         robot.drive(speed, correction)
         wait(20)
     robot.stop(Stop.BRAKE)

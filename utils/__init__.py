@@ -46,3 +46,8 @@ def print_matrix(matrix, *args, **kwargs):
     for line in matrix:
         print(line)
     print(*args, **kwargs)
+
+
+def signe(val:int):
+    if val<0: return -1
+    return 1

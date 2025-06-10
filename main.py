@@ -38,11 +38,11 @@ def main():
 
     #exo 3
     # Move player to finnish
-    for vec in path:
-        goto = get_movement_vector(maze.player, vec)
-        move(goto)
+    for vec in range(2):
+        # goto = get_movement_vector(maze.player, vec)
+        move(Vector(0, 1))
         # print(goto.x, goto.y)
-        maze.player = vec
+        # maze.player = vec
 
     # for i in (270, 360, 90, 180, 90, 0, 180):
     #     print("Angle:", current_angle, "calculeted", gyro.angle())
